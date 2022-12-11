@@ -92,7 +92,6 @@ class Folder(val name: String, val parent: Folder?) {
 
     /**
      * This could be calculated once since the size is static.
-     * Compiler might even do that.
      */
     fun getTotalSize(): Int {
         return this.files.values.sumOf { it } + this.childs.sumOf { it.getTotalSize() }
