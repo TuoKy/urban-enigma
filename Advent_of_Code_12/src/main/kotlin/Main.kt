@@ -1,6 +1,4 @@
 import java.io.File
-import java.lang.Exception
-import java.lang.RuntimeException
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -14,19 +12,15 @@ class Game() {
     private var start: Int = 0
     private var end: Int = 0
     private val width: Int
-    private val height: Int
     private var visited: BooleanArray
     private var costs: IntArray
 
     init {
         var temp = 0
-        var temp2 = 0
         File(ClassLoader.getSystemResource("input").file).forEachLine { s ->
             temp = s.length
-            temp2++
             this.map.addAll(s.toCharArray().toList())
         }
-        this.height = temp2
         this.width = temp
 
         this.visited = BooleanArray(this.map.size) { false }
@@ -41,7 +35,7 @@ class Game() {
         partB()
     }
 
-    private fun partA(startingPoint: Int): Int{
+    private fun partA(startingPoint: Int): Int {
         this.costs[startingPoint] = 0
 
         while (!visited[end]) {
@@ -54,17 +48,16 @@ class Game() {
         return this.costs[end]
     }
 
-    private fun partB(){
-        val starts = this.map.mapIndexedNotNull{ index, elem -> index.takeIf{ elem == 'a' } }
+    private fun partB() {
+        val starts = this.map.mapIndexedNotNull { index, elem -> index.takeIf { elem == 'a' } }
         val options: MutableList<Int> = ArrayList()
-        starts.forEach{
+        starts.forEach {
             Arrays.fill(visited, false);
             Arrays.fill(costs, Int.MAX_VALUE)
             options.add(partA(it))
         }
         println(options.min())
     }
-
 
 
     private fun findMinUnvisited(): Int? {
